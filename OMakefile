@@ -166,5 +166,7 @@ FILES[] =
 
 .DEFAULT: $(OCamlProgram test_scan, $(FILES) scan)
 
+.DEFAULT: $(OCamlProgram obfuscator, $(FILES) obfuscator)
+
 #.DEFAULT: $(OCamlProgram test_split, $(FILES) block)
 
