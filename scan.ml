@@ -10,7 +10,7 @@ class block (block_name: string) (code: masm list) = object
   val masm_code = code
   method get_name = name
   method get_code = masm_code
-end;;
+end
 
 
 class analyzer = object(self)
@@ -43,10 +43,7 @@ class analyzer = object(self)
     let blk = new block label code in
     analyze_dasm_instruction code label;
     code_blocks <- blk :: code_blocks;
-    inst <- [];
-    label <- "";
-    extern <- [];
-  ;
+    inst <- []
 
   method private push_inst (i: masm) = inst <- i :: inst
   method private push_extern (n: string) = extern <- n :: extern
@@ -55,7 +52,7 @@ class analyzer = object(self)
     let rec scan_all masmlist =
       let analyze c =
         match c with
-          Label s -> (*printf  "Label: %s\n" s;*) self#push_block; ();
+          Label s -> (*printf  "Label: %s\n" s;*) self#push_block; label <- s; ();
         | Instruction _ -> self#push_inst c
         | InstructionWithPrefix _ -> self#push_inst c
         | Extern(name, _) -> self#push_extern name
@@ -66,9 +63,9 @@ class analyzer = object(self)
       | _  -> ()
     in
     scan_all masmlist;
-    self#push_block;
+    self#push_block
 
-end;;
+end
 
 
 let main =
